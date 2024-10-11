@@ -2,7 +2,6 @@ import { v2 as cloudinary } from "cloudinary";
 import "dotenv/config";
 
 export async function uploadToCloudinary(req) {
-  // console.log(process.env);
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
