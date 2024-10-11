@@ -87,7 +87,7 @@ export async function deleteProduct(req, res) {
 
 export async function getSingleProduct(req, res) {
   const idToFind = req.params.id;
-  const singleProduct = await productModel.findById({ _id: idToFind });
+  const singleProduct = await productModel.findOne({ _id: idToFind });
   res.json(singleProduct);
 }
 
@@ -96,9 +96,7 @@ export async function addToWishlist(req, res) {
   const userID = req.user._id;
   let updatedUser;
 
-  productID = new mongoose.Types.ObjectId(productID);
-
-  //GATHER ALL THE DATA FOR THIS USER
+  productID = new mongoose.Schema.ObjectId(productID);
 
   //CHECK WHETHER PRODUCT IS ALREADY ADDED
   const user = req.user;
