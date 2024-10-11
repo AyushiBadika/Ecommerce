@@ -14,6 +14,7 @@ import brandRoutes from "./routers/brand.js";
 import couponRoutes from "./routers/coupon.js";
 import applyCoupon from "./routers/applyCoupon.js";
 import cartRoutes from "./routers/cart.js";
+import paymentRoutes from "./routers/paymentsRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -31,6 +32,7 @@ app.use(brandRoutes);
 app.use(couponRoutes);
 app.use(applyCoupon);
 app.use(cartRoutes);
+app.use(paymentRoutes);
 
 try {
   await mongoose.connect(process.env.CONNECTION_STRING);
