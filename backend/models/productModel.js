@@ -2,39 +2,59 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    userId: {
+    addedBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+    title: {
       type: String,
       required: true,
-      unique: true,
+      trim: true,
     },
-    name: {
+    description: {
       type: String,
+      required: true,
+      trim: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: ["Electronics", "Clothing", "Home", "Beauty", "Books", "Sports", "Other"],
+    },
+    stock: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    images: {
+      type: [String],
       required: true,
     },
-
-    email: {
+    brand: {
       type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      required: true,
+      trim: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export const userModel = mongoose.model("users", userSchema);
+export const productModel = mongoose.model("product", productSchema);
 
-export const createUser = async ({ userId, name, email, password, role }) => {
-  const user = await userModel.create({ userId, name, email, password, role });
+export const createProduct = async ({}) => {
+  const user = await productModel.create({ title, description, price, category, stock, image, brand });
   return user;
 };
-export const findUser = async ({ email }) => {
-  const user = await userModel.findOne({ email });
+export const findProduct = async ({ id }) => {
+  const user = await productModel.findOne({ id });
   return user;
+};
+
+export const update = async ({ query, update, options }) => {
+  const response = await productModel.updateOne(query, update, options);
+
+  if (response.modifiedCount > 0) return { ok: true };
 };
